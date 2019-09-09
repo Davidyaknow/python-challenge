@@ -1,6 +1,6 @@
 import datetime
 
-f = open("budget_data.txt", "r")
+f = open("budget_data.csv", "r")
 f.readline()
 
 net_Total_Amount = 0

@@ -1,4 +1,4 @@
-f = open("election_data.txt", "r")
+f = open("election_data.csv", "r")
 f.readline()
 
 num_of_votes = 0
