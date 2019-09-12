@@ -4,6 +4,8 @@ f = open("budget_data.csv", "r")
 f.readline()
 
 net_Total_Amount = 0
+first_pl = None
+last_pl = None
 total_Months = 0
 average_Change = 0
 previous_val = 0
@@ -35,16 +37,19 @@ for row in f:
     
     if first_date == None or date_obj < first_date:
         first_date = date_obj
+        first_pl = pl
         
     if last_date == None or date_obj > last_date:
         last_date = date_obj
+        last_pl = pl
+
 
     previous_val = pl
         
 
 total_Months = last_date.month - first_date.month + 12 * (last_date.year - first_date.year) + 1 
 
-average_Change = net_Total_Amount/total_Months
+average_Change = (last_pl - first_pl) / (total_Months - 1)
 
 def print_result(f_out=None):
     print("Financial Analysis", file=f_out)
