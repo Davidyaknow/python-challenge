@@ -34,14 +34,20 @@ for candidate in votes:
 # print(candidate_list)
 # print(votes)
 
-print(f"Election Results")
-print(f"-------------------------")
-print(f"Total Votes: {num_of_votes}")
-print(f"-------------------------")
-for name in candidate_list:
-    percentage = round(100 * votes[name] / num_of_votes, 3)
-    percentage_str = "%.3f" % percentage
-    print(f"{name}: {percentage_str}% ({votes[name]})")
-print(f"-------------------------")
-print(f"Winner: {winner}")
-print(f"-------------------------")
+def print_result(f_out=None):
+    print(f"Election Results",file=f_out)
+    print(f"-------------------------",file=f_out)
+    print(f"Total Votes: {num_of_votes}",file=f_out)
+    print(f"-------------------------",file=f_out)
+    for name in candidate_list:
+        percentage = round(100 * votes[name] / num_of_votes, 3)
+        percentage_str = "%.3f" % percentage
+        print(f"{name}: {percentage_str}% ({votes[name]})",file=f_out)
+    print(f"-------------------------",file=f_out)
+    print(f"Winner: {winner}",file=f_out)
+    print(f"-------------------------",file=f_out)
+
+print_result()
+
+f_out = open("election_data_output.txt", "w")
+print_result(f_out)

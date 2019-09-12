@@ -6,6 +6,7 @@ f.readline()
 net_Total_Amount = 0
 total_Months = 0
 average_Change = 0
+previous_val = 0
 greatest_Increase = 0
 greatest_Decrease = 0
 greatest_Increase_Month = ""
@@ -19,16 +20,17 @@ for row in f:
     date = x[0]
     date_obj = datetime.datetime.strptime(x[0], "%b-%Y")
     pl = int(x[1])
-    print(date, pl)
 
     net_Total_Amount = net_Total_Amount + pl
+    difference = pl - previous_val
+    # print(date, pl, difference)
 
-    if pl > greatest_Increase:
-        greatest_Increase = pl 
+    if difference > greatest_Increase:
+        greatest_Increase = difference 
         greatest_Increase_Month = date
 
-    if pl < greatest_Decrease:
-        greatest_Decrease = pl 
+    if difference < greatest_Decrease:
+        greatest_Decrease = difference 
         greatest_Decrease_Month = date
     
     if first_date == None or date_obj < first_date:
@@ -36,16 +38,24 @@ for row in f:
         
     if last_date == None or date_obj > last_date:
         last_date = date_obj
+
+    previous_val = pl
         
 
 total_Months = last_date.month - first_date.month + 12 * (last_date.year - first_date.year) + 1 
 
 average_Change = net_Total_Amount/total_Months
 
-print("Financial Analysis")
-print("----------------------------")
-print(f"Total Months: {total_Months}")
-print(f"Total: ${net_Total_Amount}")
-print(f"Average  Change: ${round(average_Change, 2)}")
-print(f"Greatest Increase in Profits: {greatest_Increase_Month} (${greatest_Increase})")
-print(f"Greatest Decrease in Profits: {greatest_Decrease_Month} (${greatest_Decrease})")
+def print_result(f_out=None):
+    print("Financial Analysis", file=f_out)
+    print("----------------------------", file=f_out)
+    print(f"Total Months: {total_Months}", file=f_out)
+    print(f"Total: ${net_Total_Amount}", file=f_out)
+    print(f"Average  Change: ${round(average_Change, 2)}", file=f_out)
+    print(f"Greatest Increase in Profits: {greatest_Increase_Month} (${greatest_Increase})", file=f_out)
+    print(f"Greatest Decrease in Profits: {greatest_Decrease_Month} (${greatest_Decrease})", file=f_out)
+
+print_result()
+
+f_out = open("budget_data_output.txt", "w")
+print_result(f_out)
