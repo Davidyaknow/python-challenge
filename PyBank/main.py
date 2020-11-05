@@ -63,4 +63,4 @@ def print_result(f_out=None):
 print_result()
 
 f_out = open("budget_data_output.txt", "w")
-print_result(f_out)
+print_result(f_out) 
